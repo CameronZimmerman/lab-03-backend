@@ -66,4 +66,15 @@ describe('03_separation-of-concerns-demo routes', () => {
       },
     ]);
   });
+
+  it('deletes an orders from database by id', async () => {
+    await request(app).delete('/api/v1/orders/2');
+    const res = await request(app).get('/api/v1/orders');
+    expect(res.body).toEqual([
+      {
+        id: '1',
+        quantity: 20,
+      },
+    ]);
+  });
 });
