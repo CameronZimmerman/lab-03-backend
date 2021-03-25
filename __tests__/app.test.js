@@ -15,8 +15,10 @@ describe('03_separation-of-concerns-demo routes', () => {
     return setup(pool);
   });
   let order;
+  let order2;
   beforeEach(async () => {
     order = await Order.insert({ quantity: 10 });
+    order2 = await Order.insert({ quantity: 15 });
   });
 
   it('creates a new order in our database and sends a text message', async () => {
@@ -25,7 +27,7 @@ describe('03_separation-of-concerns-demo routes', () => {
       .send({ quantity: 10 });
 
     expect(res.body).toEqual({
-      id: '2',
+      id: '3',
       quantity: 10,
     });
   });
@@ -37,17 +39,11 @@ describe('03_separation-of-concerns-demo routes', () => {
         id: '1',
         quantity: 10,
       },
-    ]);
-  });
-
-  it('returns an orders from database by id', async () => {
-    const res = await request(app).get('/api/v1/orders/1');
-    expect(res.body).toEqual(
       {
-        id: '1',
-        quantity: 10,
+        id: '2',
+        quantity: 15,
       },
-    );
+    ]);
   });
 
   it('updates an existing order in our database and sends a text message', async () => {
@@ -59,5 +55,15 @@ describe('03_separation-of-concerns-demo routes', () => {
       id: '1',
       quantity: 20,
     });
+  });
+
+  it('returns an orders from database by id', async () => {
+    const res = await request(app).get('/api/v1/orders/2');
+    expect(res.body).toEqual([
+      {
+        id: '2',
+        quantity: 15,
+      },
+    ]);
   });
 });
