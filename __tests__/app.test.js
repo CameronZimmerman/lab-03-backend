@@ -31,11 +31,11 @@ describe('03_separation-of-concerns-demo routes', () => {
   });
 
   it('returns all orders from database', async () => {
-    const res = await request(app).get('api/v1/orders');
+    const res = await request(app).get('/api/v1/orders');
     expect(res.body).toEqual([
       {
         id: '1',
-        quantity: 20,
+        quantity: 10,
       },
     ]);
   });
